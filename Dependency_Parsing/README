@@ -1,0 +1,22 @@
+Except the mandatory files described in homework 3 document, I also have a file that defines the netural network model and the embeddings for words, POS tags and labels named as embedding.py. This file will be called by train.py, so no need to run it alone.
+
+To prepare data and train a model, run
+python train.py
+and then we can get the train.model.
+
+To parse that model on new data, run
+python parse.py -m train.model -i dev.orig.conll -o output.conll
+
+To evaluate, run
+java -cp stanford-parser.jar edu.stanford.nlp.trees.DependencyScoring -g dev.orig.conll -conllx True -s output.conll
+
+The format of preparedata.py is that each line is a converted configuration, the features of 18 words, 18 POS tags and 12 labels are stored in turn.
+For example word features: w1, w2, w3, w4, w5, w6, w7, w8, w9, w10, w11, w12, w13, w14, w15, w16, w17, w18
+w1, w2, w3 are the first three words on the stack
+w4, w5, w6 are the first three words on the stack
+w7, w8, w9, w10 are the first_left,second_left,first_right,second_right child of the first word on the stack
+w11, w12, w13, w14 are the first_left,second_left,first_right,second_right child of the second word on the stack
+w15, w16 are the second level left and right child of the first word on the stack
+w17, w18 are the second level left and right child of the second word on the stack
+
+For each configuration, word features, pos features and label features are combined one by one. At the end of the line is the transition and dependency labels.
